@@ -38,6 +38,10 @@ dependencies:
   permission_handler: ^9.2.0
   # toast
   fluttertoast: ^8.0.9
+  # photo_manager
+  photo_manager: ^1.3.10
+  # image_picker
+  image_picker: ^0.8.4+11
   
 dev_dependencies:
   flutter_test:
@@ -70,6 +74,8 @@ flutter:
     - packages/stories_editor/assets/icons/trash.png
     - packages/stories_editor/assets/icons/photo_filter.png
     - packages/stories_editor/assets/icons/video_trim.png
+    - packages/stories_editor/assets/icons/camera.png
+    - packages/stories_editor/assets/icons/search.png
     - packages/stories_editor/assets/images/instagram_logo.png
 
   fonts:
