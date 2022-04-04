@@ -23,7 +23,7 @@ class StoriesEditor extends StatefulWidget {
   final bool? isCustomFontList;
 
   /// giphy api key
-  final String giphyKey;
+  // final String giphyKey;
 
   /// editor custom color gradients
   final List<List<Color>>? gradientColors;
@@ -53,7 +53,7 @@ class StoriesEditor extends StatefulWidget {
 
   const StoriesEditor({
     Key? key,
-    required this.giphyKey,
+    // required this.giphyKey,
     required this.onDone,
     this.middleBottomWidget,
     this.colorList,
@@ -103,7 +103,7 @@ class _StoriesEditorState extends State<StoriesEditor> {
         ChangeNotifierProvider(create: (_) => RenderingNotifier()),
       ],
       child: MainView(
-        giphyKey: widget.giphyKey,
+        // giphyKey: widget.giphyKey,
         onDone: widget.onDone,
         fontFamilyList: widget.fontFamilyList,
         isCustomFontList: widget.isCustomFontList,

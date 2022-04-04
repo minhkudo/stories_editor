@@ -42,7 +42,7 @@ class MainView extends StatefulWidget {
   final bool? isCustomFontList;
 
   /// giphy api key
-  final String giphyKey;
+  // final String giphyKey;
 
   /// editor custom color gradients
   final List<List<Color>>? gradientColors;
@@ -73,7 +73,7 @@ class MainView extends StatefulWidget {
 
   MainView({
     Key? key,
-    required this.giphyKey,
+    // required this.giphyKey,
     required this.onDone,
     this.middleBottomWidget,
     this.colorList,
@@ -120,7 +120,7 @@ class _MainViewState extends State<MainView> {
       var _control = Provider.of<ControlNotifier>(context, listen: false);
 
       /// initialize control variable provider
-      _control.giphyKey = widget.giphyKey;
+      // _control.giphyKey = widget.giphyKey;
       _control.middleBottomWidget = widget.middleBottomWidget;
       _control.isCustomFontList = widget.isCustomFontList ?? false;
       if (widget.gradientColors != null) {
