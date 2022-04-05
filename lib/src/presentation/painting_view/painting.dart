@@ -123,7 +123,7 @@ class _PaintingState extends State<Painting> {
         child: RepaintBoundary(
           child: SafeArea(
             child: Align(
-              alignment: Alignment.topCenter,
+              alignment: Alignment.center,
               child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),

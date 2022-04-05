@@ -101,7 +101,8 @@ class _ExampleState extends State<Example> {
                             editorBackgroundColor: colors[colorIndex],
                             //isCustomFontList: true,
                             onDone: (uri) {
-                              // debugPrint(uri);
+                              print('uri $uri');
+                                  // debugPrint(uri);
                               // Share.shareFiles([uri]);
                             },
                           )));
