@@ -38,7 +38,7 @@ class StoriesEditor extends StatefulWidget {
   final Widget? onDoneButtonStyle;
 
   /// on back pressed
-  final Future<bool>? onBackPress;
+  final Future<String>? onBackPress;
 
   /// editor custom color palette list
   final List<Color>? colorList;

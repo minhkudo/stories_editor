@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/control_provider.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/draggable_widget_notifier.dart';
 import 'package:stories_editor/src/domain/providers/notifiers/painting_notifier.dart';
-import 'package:stories_editor/src/domain/sevices/save_as_image.dart';
-import 'package:stories_editor/src/presentation/utils/constants/item_type.dart';
-import 'package:stories_editor/src/presentation/utils/constants/text_animation_type.dart';
 import 'package:stories_editor/src/presentation/utils/modal_sheets.dart';
 import 'package:stories_editor/src/presentation/widgets/animated_onTap_button.dart';
 import 'package:stories_editor/src/presentation/widgets/tool_button.dart';
@@ -15,11 +11,8 @@ class TopTools extends StatefulWidget {
   final GlobalKey contentKey;
   final BuildContext context;
   final Function renderWidget;
-  const TopTools(
-      {Key? key,
-      required this.contentKey,
-      required this.context,
-      required this.renderWidget})
+
+  const TopTools({Key? key, required this.contentKey, required this.context, required this.renderWidget})
       : super(key: key);
 
   @override
@@ -28,10 +21,10 @@ class TopTools extends StatefulWidget {
 
 class _TopToolsState extends State<TopTools> {
   bool _createVideo = false;
+
   @override
   Widget build(BuildContext context) {
-    return Consumer3<ControlNotifier, PaintingNotifier,
-        DraggableWidgetNotifier>(
+    return Consumer3<ControlNotifier, PaintingNotifier, DraggableWidgetNotifier>(
       builder: (_, controlNotifier, paintingNotifier, itemNotifier, __) {
         return SafeArea(
           child: Container(
@@ -49,19 +42,14 @@ class _TopToolsState extends State<TopTools> {
                     ),
                     backGroundColor: Colors.black12,
                     onTap: () async {
-                      var res = await exitDialog(
-                          context: widget.context,
-                          contentKey: widget.contentKey);
-                      if (res) {
-                        Navigator.pop(context);
-                      }
+                      var res = await exitDialog(context: widget.context, contentKey: widget.contentKey);
+                      Navigator.pop(context, res);
                     }),
                 if (controlNotifier.mediaPath.isEmpty)
                   _selectColor(
                       controlProvider: controlNotifier,
                       onTap: () {
-                        if (controlNotifier.gradientIndex >=
-                            controlNotifier.gradientColors!.length - 1) {
+                        if (controlNotifier.gradientIndex >= controlNotifier.gradientColors!.length - 1) {
                           setState(() {
                             controlNotifier.gradientIndex = 0;
                           });
@@ -122,8 +110,7 @@ class _TopToolsState extends State<TopTools> {
                 //         context: context, giphyKey: controlNotifier.giphyKey)),
                 ToolButton(
                     child: const ImageIcon(
-                      AssetImage('assets/icons/draw.png',
-                          package: 'stories_editor'),
+                      AssetImage('assets/icons/draw.png', package: 'stories_editor'),
                       color: Colors.white,
                       size: 20,
                     ),
@@ -145,14 +132,12 @@ class _TopToolsState extends State<TopTools> {
                 // ),
                 ToolButton(
                   child: const ImageIcon(
-                    AssetImage('assets/icons/text.png',
-                        package: 'stories_editor'),
+                    AssetImage('assets/icons/text.png', package: 'stories_editor'),
                     color: Colors.white,
                     size: 20,
                   ),
                   backGroundColor: Colors.black12,
-                  onTap: () => controlNotifier.isTextEditing =
-                      !controlNotifier.isTextEditing,
+                  onTap: () => controlNotifier.isTextEditing = !controlNotifier.isTextEditing,
                 ),
               ],
             ),
@@ -181,8 +166,7 @@ class _TopToolsState extends State<TopTools> {
               gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: controlProvider
-                      .gradientColors![controlProvider.gradientIndex]),
+                  colors: controlProvider.gradientColors![controlProvider.gradientIndex]),
               shape: BoxShape.circle,
             ),
           ),

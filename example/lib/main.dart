@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:stories_editor/stories_editor.dart';
 
 void main() {
@@ -48,6 +47,7 @@ class _ExampleState extends State<Example> {
     Colors.brown,
     Colors.green,
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,17 +58,17 @@ class _ExampleState extends State<Example> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Center(
-                child: Text('Background color',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold
-                  ),
+                child: Text(
+                  'Background color',
+                  style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(height: 20),
               SizedBox(
-                width: MediaQuery.of(context).size.width,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -94,18 +94,21 @@ class _ExampleState extends State<Example> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => StoriesEditor(
-                            // giphyKey: '[HERE YOU GIPHY API KEY]',
-                            //fontFamilyList: const ['Shizuru', 'Aladin'],
-                            galleryThumbnailQuality: 300,
-                            editorBackgroundColor: colors[colorIndex],
-                            //isCustomFontList: true,
-                            onDone: (uri) {
-                              print('uri $uri');
+                          builder: (context) =>
+                              StoriesEditor(
+                                // giphyKey: '[HERE YOU GIPHY API KEY]',
+                                //fontFamilyList: const ['Shizuru', 'Aladin'],
+                                galleryThumbnailQuality: 300,
+                                editorBackgroundColor: colors[colorIndex],
+                                //isCustomFontList: true,
+                                pathImage:
+                                '/data/user/0/dev.camilo.flutter.stories_editor.example.example/app_flutter/stories_creator2022-04-07 00:01:40.001496.png',
+                                onDone: (uri) {
+                                  print('uri $uri');
                                   // debugPrint(uri);
-                              // Share.shareFiles([uri]);
-                            },
-                          )));
+                                  // Share.shareFiles([uri]);
+                                },
+                              ))).then((value) => print('value ${value}'));
                 },
                 child: const Text('Open Stories Editor'),
               ),
@@ -133,16 +136,17 @@ class _ExampleState extends State<Example> {
             height: 40,
             width: 40,
             child: Center(
-              child: color == colors[colorIndex] ? const Icon(
+              child: color == colors[colorIndex]
+                  ? const Icon(
                 Icons.check,
                 size: 20,
                 color: Colors.white,
-              ) : Container(),
+              )
+                  : Container(),
             ),
           ),
         ),
       ),
     );
   }
-
 }

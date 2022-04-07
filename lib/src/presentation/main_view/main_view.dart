@@ -57,7 +57,7 @@ class MainView extends StatefulWidget {
   final Widget? onDoneButtonStyle;
 
   /// on back pressed
-  final Future<bool>? onBackPress;
+  final Future<String>? onBackPress;
 
   /// editor background color
   Color? editorBackgroundColor;
@@ -117,6 +117,7 @@ class _MainViewState extends State<MainView> {
   @override
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      var _draggableWidgetNotifier = Provider.of<DraggableWidgetNotifier>(context, listen: false);
       var _control = Provider.of<ControlNotifier>(context, listen: false);
 
       /// initialize control variable provider
@@ -132,36 +133,31 @@ class _MainViewState extends State<MainView> {
       if (widget.colorList != null) {
         _control.colorList = widget.colorList;
       }
+
+      if (widget.path != null) {
+        _control.mediaPath = widget.path!;
+        if (_control.mediaPath.isNotEmpty) {
+          _draggableWidgetNotifier.draggableWidget.insert(
+              0,
+              EditableItem()
+                ..type = ItemType.image
+                ..position = const Offset(0.0, 0));
+        }
+      }
     });
     super.initState();
-
-    showImageByPath(widget.path);
   }
 
   @override
   void dispose() {
+    Provider.of<ControlNotifier>(context, listen: false).dispose();
     super.dispose();
-  }
-
-  showImageByPath(String? path) {
-    if (path != null) {
-      var _controlNotifier = Provider.of<ControlNotifier>(context, listen: false);
-      var _draggableWidgetNotifier = Provider.of<DraggableWidgetNotifier>(context, listen: false);
-      _controlNotifier.mediaPath = path;
-      if (_controlNotifier.mediaPath.isNotEmpty) {
-        _draggableWidgetNotifier.draggableWidget.insert(
-            0,
-            EditableItem()
-              ..type = ItemType.image
-              ..position = const Offset(0.0, 0));
-      }
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: _popScope,
+      onWillPop: () async => false,
       child: Material(
         color: widget.editorBackgroundColor == Colors.transparent
             ? Colors.black
@@ -184,7 +180,6 @@ class _MainViewState extends State<MainView> {
                         pageController: scrollProvider.pageController,
                         gridController: scrollProvider.gridController,
                         mainView: Stack(
-                          alignment: Alignment.center,
                           children: [
                             ///gradient container
                             /// this container will contain all widgets(image/texts/draws/sticker)
@@ -198,7 +193,7 @@ class _MainViewState extends State<MainView> {
                                 child: SizedBox(
                                   width: _screenSize.size.width,
                                   height: Platform.isIOS
-                                      ? (_screenSize.size.height - 135) - _screenSize.viewPadding.top
+                                      ? (_screenSize.size.height - 132) - _screenSize.viewPadding.top
                                       : (_screenSize.size.height - 132),
                                   child: ScreenRecorder(
                                     controller: _recorderController,
@@ -453,6 +448,23 @@ class _MainViewState extends State<MainView> {
                         //   ],
                         // ),
                       ),
+                      // Visibility(
+                      //   visible: !controlNotifier.isTextEditing && !controlNotifier.isPainting,
+                      //   child: Positioned(
+                      //     top: -50,
+                      //     child: Container(
+                      //       width: MediaQuery.of(context).size.width,
+                      //       child: TopTools(
+                      //         contentKey: contentKey,
+                      //         context: context,
+                      //         renderWidget: () => startRecording(
+                      //             controlNotifier: controlNotifier,
+                      //             renderingNotifier: renderingNotifier,
+                      //             saveOnGallery: true),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       const RenderingIndicator()
                     ],
                   ),
@@ -523,26 +535,26 @@ class _MainViewState extends State<MainView> {
   }
 
   /// validate pop scope gesture
-  Future<bool> _popScope() async {
+  Future<String?> _popScope() async {
     final controlNotifier = Provider.of<ControlNotifier>(context, listen: false);
 
     /// change to false text editing
     if (controlNotifier.isTextEditing) {
       controlNotifier.isTextEditing = !controlNotifier.isTextEditing;
-      return false;
+      return null;
     }
 
     /// change to false painting
     else if (controlNotifier.isPainting) {
       controlNotifier.isPainting = !controlNotifier.isPainting;
-      return false;
+      return null;
     }
 
     /// show close dialog
     else if (!controlNotifier.isTextEditing && !controlNotifier.isPainting) {
       return widget.onBackPress ?? exitDialog(context: context, contentKey: contentKey);
     }
-    return false;
+    return null;
   }
 
   /// start item scale
